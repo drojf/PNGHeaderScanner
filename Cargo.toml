@@ -9,5 +9,5 @@ edition = "2018"
 [dependencies]
 byteorder = "1"
 walkdir = "2"
-oxipng = "2.2.2"
+oxipng = { git = "https://github.com/drojf/oxipng" }
 image = "0.21.2"

@@ -4,6 +4,7 @@ use std::io::Read;
 use walkdir::WalkDir;
 use std::path::Path;
 use std::ffi::OsStr;
+use std::collections::HashSet;
 use std::{fs, env};
 
 #[derive(Debug)]
@@ -128,6 +129,7 @@ fn fix_image(path : &Path) {
     oxipng::optimize(&inpath,
                      &outpath,
                      &oxipng::Options {
+                        alphas: HashSet::new(), //Disable Alpha optimizations
                          color_type_reduction: false,
                          ..Default::default()
                      })
