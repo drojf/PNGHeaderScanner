@@ -114,11 +114,11 @@ fn fix_image(path : &Path) {
     let image_size_before = fs::metadata(path).expect("Can't get image size").len() as f32;
 
     print!("Converting to RGB/RGBA...");
-    let img = image::open(path).expect("Failed to open image!");
+    let image_before_optimizing = image::open(path).expect("Failed to open image!");
 
 
     //image "0.21.2" will save as RGBA32 format
-    img.save(path).expect("Failed to save image!");
+    image_before_optimizing.save(path).expect("Failed to save image!");
 
     print!(" Optimizing...");
 
@@ -135,6 +135,19 @@ fn fix_image(path : &Path) {
 
     print!("Optimized.");
     println!();
+
+    let image_pixel_data_after_optimizing = image::open(path)
+        .expect("Failed to open optimized image!")
+        .raw_pixels();
+
+    // Check the images are 100% identical
+    if image_before_optimizing.raw_pixels() != image_pixel_data_after_optimizing {
+        println!("---------------------------------------------");
+        println!("ERROR: optimized image wasn't identical to original image");
+        println!("---------------------------------------------");
+        std::process::exit(-1);
+    }
+
 
     let image_size_after = fs::metadata(path).expect("Can't get image size").len() as f32;
     println!("-------------------------------");
