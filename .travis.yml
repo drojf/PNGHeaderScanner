@@ -1,0 +1,20 @@
+language: rust
+matrix:
+  include:
+  - name: Build Linux
+    dist: xenial
+    env:
+    - BUILD_MODE=NORMAL
+    - RUN_TESTS=TRUE
+script:
+- cargo build --release
+deploy:
+  provider: releases
+  api_key:
+    secure: Tnmdj7xEzBnz7CBg+KJdwW/GzFmgMcoLk7We9vPO3TBNmcAZ+D2+o/vyoAVlMYombzM7vFgGZxn0+bXtZ9gUh3RMEPT9IyQ+md1sZk6Emm9C9XtBvbOEEiinXLNPyU7TVR/e/himCzQHrAgj8VScISVmWx1BMYQcszwotbqtpRcjLoFMhSJNuYdH2nVx34f05R+bld6noDMMouqNjxTYZKjDPEed25iYc08wIEm2s5RlVb5a4JL4MbURPw+PgnOu5koGpoDTi8PozlJqubkp/Mo8ITUuzmog615HnyrnOwe/hbJPPId4y/K5EYA5Pa+Mr+uSczLVMMD38mZT+O2gE0JhCv6wxzxvLZLaGR5HXROBpW6gLzHjIFJQxor15cFlE5r/kM7CJNc1xRDA/Gahmdd0CNMD7dflUrIkOar21/EBAtP7qCQ5PKTtqsj8a2uVCr5CEfHHxHLQzjM8JiU132UDRObxNLXw2rS2wYmFiG4+jUBlP5qrjvRvIfEFynb1BXRBN8bnYh5sNSW4fL4SDByb8kFj1TEyGUX+RPjJl+DHxAoZ+WDugxFP9oqfsDwTk3gALuyFF4MB1sxwR785X7eR1Ff3vaRoz8zXTgjCsZLdquWCD6tBzTZdu5DB5ThKVB6Ankzu/hHusu7Nu3RnH7yVFV7WcKPtOtgZpP059H0=
+  file_glob: true
+  file: target/release/png_header_scanner
+  skip_cleanup: true
+  on:
+    tags: true
+  draft: true
