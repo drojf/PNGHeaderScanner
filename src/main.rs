@@ -4,8 +4,6 @@ use std::io::Read;
 use walkdir::WalkDir;
 use std::path::Path;
 use std::ffi::OsStr;
-use std::collections::HashSet;
-use oxipng::AlphaOptim;
 use std::{fs, env};
 
 #[derive(Debug)]
@@ -127,17 +125,9 @@ fn fix_image(path : &Path) {
     let inpath = oxipng::InFile::Path(path.to_path_buf());
     let outpath = oxipng::OutFile::Path(None);
 
-    let mut alphas = HashSet::new();
-    alphas.insert(AlphaOptim::White);
-    alphas.insert(AlphaOptim::Up);
-    alphas.insert(AlphaOptim::Down);
-    alphas.insert(AlphaOptim::Left);
-    alphas.insert(AlphaOptim::Right);
-
     oxipng::optimize(&inpath,
                      &outpath,
                      &oxipng::Options {
-                         alphas: alphas,
                          color_type_reduction: false,
                          ..Default::default()
                      })
